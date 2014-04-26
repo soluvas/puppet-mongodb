@@ -51,6 +51,7 @@ class mongodb(
   }
 
   service { "mongodb":
+    name => 'mongod',
     enable => true,
     ensure => running,
     require => Package[$package],
