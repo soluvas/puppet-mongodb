@@ -56,7 +56,7 @@ class mongodb(
     require => Package[$package],
   }
 
-# Ubuntu's uses /etc/mongod.conf instead
+# MongoDB 2.6 uses /etc/mongod.conf instead, but erb template is obsolete
 #  file { "/etc/init/mongod.conf":
 #    content => template("mongodb/mongodb.conf.erb"),
 #    mode => "0644",
