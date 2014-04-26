@@ -22,7 +22,8 @@ class mongodb(
   $respawn = $mongodb::params::respawn,
   $ulimit_nofile = $mongodb::params::ulimit_nofile,
   $repository = $mongodb::params::repository,
-  $package = $mongodb::params::package
+  $package = $mongodb::params::package,
+  $enable_service = true
 ) inherits mongodb::params {
 
   exec { "10gen-apt-key":
@@ -50,11 +51,20 @@ class mongodb(
     require => Exec["10gen-apt-update"],
   }
 
-  service { "mongodb":
-    name => 'mongod',
-    enable => true,
-    ensure => running,
-    require => Package[$package],
+  if $enable_service == true {
+    service { "mongodb":
+      name => 'mongod',
+      enable => true,
+      ensure => running,
+      require => Package[$package],
+    }
+  } else {
+    service { "mongodb":
+      name => 'mongod',
+      enable => false,
+      ensure => stopped,
+      require => Package[$package],
+    }
   }
 
 # MongoDB 2.6 uses /etc/mongod.conf instead, but erb template is obsolete
