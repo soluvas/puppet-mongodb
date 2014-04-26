@@ -56,11 +56,12 @@ class mongodb(
     require => Package[$package],
   }
 
-  file { "/etc/init/mongodb.conf":
-    content => template("mongodb/mongodb.conf.erb"),
-    mode => "0644",
-    notify => Service["mongodb"],
-    require => Package[$package],
-  }
+# Ubuntu's uses /etc/mongod.conf instead
+#  file { "/etc/init/mongod.conf":
+#    content => template("mongodb/mongodb.conf.erb"),
+#    mode => "0644",
+#    notify => Service["mongodb"],
+#    require => Package[$package],
+#  }
 
 }
